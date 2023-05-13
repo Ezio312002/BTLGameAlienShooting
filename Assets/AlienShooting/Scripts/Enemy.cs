@@ -32,5 +32,10 @@ public class Enemy : MonoBehaviour
 
         Instantiate(deadVfxPrefab, transform.position,Quaternion.identity);
         Destroy(gameObject);
+        if (GameManager.Ins)
+        {
+            GameManager.Ins.Killed++;
+            GameManager.Ins.AddScore();
+        } 
     }
 }

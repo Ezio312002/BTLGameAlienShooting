@@ -14,22 +14,28 @@ public class SlowController : Singleton<SlowController>
 
     void Update()
     {
-      //  if (!GameManager.Ins || !GUIManager.Ins) return;
+      if (!GameManager.Ins || !GUIManager.Ins) return;
 
-       // if (GameManager.Ins.state != GameState.Playing) return;
+      if (GameManager.Ins.State != GameState.Playing) return;
 
         Time.timeScale += (1f / slowdownLength) * Time.unscaledDeltaTime;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-      //  if (GameManager.Ins.IsEnemiesSlowed)
-      //  {
-      //      GUIManager.Ins.UpdateTimerBar(Time.timeScale, 1, true);
-     //   }
+       if (GameManager.Ins.IsSlowed)
+       {
+          GUIManager.Ins.UpdateTimerBar(Time.timeScale, 1, true);
+        }
     }
 
     public void DoSlowmotion()
     {
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
-       // GameManager.Ins.IsEnemiesSlowed = true;
+
+        if (GameManager.Ins)
+        {
+            GameManager.Ins.IsSlowed = true;
+        }
+
+
     }
 }

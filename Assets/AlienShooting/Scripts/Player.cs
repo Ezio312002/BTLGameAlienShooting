@@ -48,7 +48,7 @@ public class Player : Singleton<Player>
 
     private void Shoot (Vector3 mousePos)
     {
-        if(m_bullet <= 0) return;
+        if(m_bullet <= 0 || !GameManager.Ins || GameManager.Ins.State != GameState.Playing) return;
         m_bullet --;
 
         Vector3 shootingDir = m_camera.transform.position - mousePos;
@@ -73,7 +73,19 @@ public class Player : Singleton<Player>
                 }
             
         }
- 
+        if (GUIManager.Ins)
+        {
+            GUIManager.Ins.UpdateBulletsText(m_bullet);
+        }
+
+        if (AudioController.Ins)
+        {
+            AudioController.Ins.PlaySound(AudioController.Ins.shootingSound);
+        }
+        if (CinemachineController.Ins)
+        {
+            CinemachineController.Ins.ShakeTrigger();
+        }
     }
 }
 
